@@ -7,12 +7,12 @@ from dao.voice import VoiceDAO
 
 class Voice:
 
-    voice_dao = VoiceDAO()
     koi_qq = setting["account"]["qq"]["koi"]
 
     # INIT SETTINGS
     def __init__(self, to):
         self.to = to
+        self.voice_dao = VoiceDAO()
 
     # SEND VOICE
     def send(self, vid, filename):

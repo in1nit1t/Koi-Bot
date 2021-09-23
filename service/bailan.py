@@ -3,6 +3,8 @@ import re
 from core.setting import setting
 from core.util import Util, CQHTTP
 
+g_group_service_config = setting["service"]["group"]
+
 
 class BaiLan:
 
@@ -18,8 +20,12 @@ class BaiLan:
             msg = "忘了"
 
         # SIGN IN MODULE
-        elif command == "签到":
+        elif command == "签到" and g_group_service_config["sign_in"]["enable"]:
             msg = "看我干嘛 我又不是签到表"
+
+        # POINTS MODULE
+        elif command in ["积分兑换", "兑换清单", "兑换列表"] and g_group_service_config["sign_in"]["enable"]:
+            msg = "\n\n\n"
 
         # SETU MODULE
         elif re.search(r"(涩图|色图|涩涩|色色|setu)", command):
@@ -81,7 +87,7 @@ class BaiLan:
         elif re.search(r"\[CQ:reply,id=(.+?)]\[CQ:at,qq=\d+] 删除", raw_message):
             msg = "删了 但是没完全删"
 
-        elif re.search(r"(开摆|摆烂)", raw_message):
+        elif raw_message in ["摆烂模式", "开始摆烂"]:
             msg = "在摆了在摆了（流汗黄豆）"
 
         return msg
