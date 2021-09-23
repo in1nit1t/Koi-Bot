@@ -27,7 +27,7 @@
 
 ## 简介
 
-这是个一时兴起而产出的项目，起因是觉得平时混的一个群的 bot 不够好玩，直接原因是 [koi 欢](https://space.bilibili.com/210127180) 实在是太可爱了。所以，一个为 koi **定制**的 bot —— Koi Bot 诞生了
+这是个一时兴起而产出的项目，起因是觉得平时混的一个群的 bot 不够好玩，直接原因是 [koi 欢](https://space.bilibili.com/210127180) 实在是太可爱了。所以，一个为 koi 定制的 bot —— Koi Bot 诞生了
 
 #### 编程语言
 
@@ -58,12 +58,13 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 
 欢迎大家来 [qq群](https://jq.qq.com/?_wv=1027&k=e4okN6Q5) 调戏 kb，希望群大佬能为 kb 开发更多的功能。使用过程中遇到 bug 或者对 kb 有什么建议，麻烦私聊我或者提 Issue，Thanks♪(･ω･)ﾉ
 
-
+<br>
 
 ## 技能列表
 
 <details>
 <summary>主动技能</summary>
+
 1. 菜单
    - 所有功能概述
    - 每种功能的详细解释（指令格式及效果等）
@@ -103,6 +104,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 
 <details>
 <summary>被动技能</summary>
+
 1. 发言数日榜/周榜
 2. 每日早安推送
    - 随机 ACG 图片一张
@@ -126,7 +128,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
     - 新粉丝（携带新粉丝头像及id）
 </details>
 
-
+<br>
 
 ## 部署 & 配置
 
@@ -139,13 +141,17 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 
 首先从 go-cqhttp 的 [release](https://github.com/Mrs4s/go-cqhttp/releases) 页面下载最新版可执行程序：
 
+<p align="center">
 ![Windows可执行程序](https://i.loli.net/2021/09/21/F9khMzoby8Duiml.png)
+</p>
 
 以 **64** 位系统为例，下载 **go-cqhttp_windows_amd64.zip** 并解压（当然直接下载 exe 也是可以的）
 
 运行 go-cqhttp.exe，会提示没有找到配置文件，这里输入 **1**，然后回车：
 
+<p align="center">
 ![生成配置文件](https://i.loli.net/2021/09/21/nEah3jtdFODqiGI.png)
+</p>
 
 关闭控制台，此时同级目录下会生成一个 **config.yml** 文件，使用文本编辑器将其打开，修改以下三项：
 
@@ -153,11 +159,13 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 - account -> password：改为 qq 号对应的密码
 - servers -> http -> post：增加 url 子项，值为 `127.0.0.1:5701`（注意在 url 前面添加短横）
 
+<p align="center">
 ![修改account配置项](https://i.loli.net/2021/09/21/U9gNRehDoLarp6S.png)
 
 ![开启反向http代理](https://i.loli.net/2021/09/21/7ZhYAOQzJ6B1TGq.png)
+</p>
 
-
+<br>
 
 > <span id="windows_mysql_setup">MySQL 数据库导入</span>
 
@@ -171,9 +179,11 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 2. `use koi_bot;` 语句指定操作的数据库
 3. `source [koibot.sql文件所在的路径];` 导入数据表
 
+<p align="center">
 ![数据库操作](https://i.loli.net/2021/09/21/8tjsHLfCbnAiKE1.png)
+</p>
 
-
+<br>
 
 > Python 依赖安装
 
@@ -181,7 +191,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 
 在项目根目录下执行 `python -m pip install -r requirements.txt`，等待库安装完毕即可
 
-
+<br>
 
 > 运行
 
@@ -190,7 +200,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 3. 运行 go-cqhttp.exe，等待一段时间，控制台会输出一个二维码，使用 bot 的 qq 扫描登录
 4. 确保 bot 在监听的群中，在群里发送 **菜单** 命令，开始使用 bot
 
-
+<br>
 
 ### Linux 服务器部署
 
@@ -200,13 +210,15 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 - Python 版本：3.8.0
 - MySQL 版本：14.14 Distrib 5.7.35
 
-
+<br>
 
 > go-cqhttp 配置
 
 首先从 go-cqhttp 的 [release](https://github.com/Mrs4s/go-cqhttp/releases) 页面下载最新版可执行程序到服务器：
 
+<p align="center">
 ![Linux可执行程序](https://i.loli.net/2021/09/21/qAYpJZwiUWgxCf8.png)
+</p>
 
 执行下列命令：
 
@@ -219,13 +231,13 @@ cd go_cqhttp
 
 接下来的操作和 **Windows 本地部署** 的 [这一板块](#windows_cqhttp_setup) 相同
 
-
+<br>
 
 > MySQL 数据库导入
 
 与 **Windows 本地部署** 的 [这一板块](#windows_mysql_setup) 相同
 
-
+<br>
 
 > Python 依赖安装
 
@@ -233,7 +245,7 @@ cd go_cqhttp
 
 在项目根目录下执行 `pip3 install -r requirements.txt`，等待库安装完毕
 
-
+<br>
 
 > 运行
 
@@ -242,7 +254,7 @@ cd go_cqhttp
 3. 执行 `./go-cqhttp`，等待一段时间，控制台会输出一个二维码，使用 bot 的 qq 扫描登录，登陆成功后退出并执行 `nohup ./go-cqhttp > /dev/null 2>cqlog &` 命令，将进程长期挂在后台
 4. 确保 bot 在监听的群中，在群里发送 **菜单** 命令，开始使用 bot
 
-
+<br>
 
 > go-cqhttp 日志管理
 
@@ -263,7 +275,7 @@ cd go_cqhttp
 }
 ```
 
-
+<br>
 
 <h3 id="self_config">Koi Bot 自身配置</h3>
 项目根目录下有一个 **setting.json** 配置文件，这里进行逐行解释
@@ -375,7 +387,7 @@ cd go_cqhttp
     }
   },
 
-  // 杂项
+  /* 杂项 */
   "misc": {
     "log_directory": "D:\\log",       // 日志存放目录
     "cache_directory": "D:\\cache",   // 缓存目录
@@ -390,14 +402,14 @@ cd go_cqhttp
 }
 ```
 
-
+<br>
 
 ### 其他必要配置
 
 1. 百度翻译 API 的 appid 及 secret key 需要自行去百度翻译开放平台申请，参考 [百度翻译 API 接入文档](https://api.fanyi.baidu.com/product/113)
 2. ALAPI 的 token 需要到 [官网](https://www.alapi.cn/) 注册，然后进入个人中心查看
 
-
+<br>
 
 ### 可能不必要的配置
 
@@ -408,7 +420,7 @@ cd go_cqhttp
    -  Linux 下：参考 [CSDN 文章](https://blog.csdn.net/qq_42396168/article/details/89784436)
 4. 使用积分兑换，且兑换物类型为 voice 时，需要配置 `misc -> web`，其中 `root_directory` 为服务器 web 服务的根目录，`host` 为通过公网访问 web 服务的 url
 
-
+<br>
 
 ## 废弃提案
 
@@ -416,7 +428,7 @@ cd go_cqhttp
 
 2. ~~图片文字识别~~（qq 自带提取图片功能，没必要造轮子）
 
-
+<br>
 
 ## TODO
 
@@ -424,7 +436,7 @@ cd go_cqhttp
 - [ ] 题库
 - [ ] 科幻片、科幻小说安利功能
 
-
+<br>
 
 ## 鸣谢
 
