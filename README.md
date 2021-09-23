@@ -422,7 +422,7 @@ cd go_cqhttp
 3. 使用 bilibili 动态通知功能，并勾选携带截图功能时，项目中用到 selenium + chrome 驱动进行爬虫任务，因此不论是 Windows 还是 Linux，都需要下载 chrome 浏览器及**对应版本**的 chrome 驱动，并配置 `misc -> executable_path -> chrome_driver` 为驱动路径
    -  Windows 下：下载 chrome 浏览器，在其中访问 [设置页面](chrome://settings/help)，查看版本号，再到 [驱动下载网站](https://npm.taobao.org/mirrors/chromedriver/) 下载对应版本的驱动压缩包并解压
    -  Linux 下：参考 [CSDN 文章](https://blog.csdn.net/qq_42396168/article/details/89784436)
-4. 使用积分兑换，且兑换物类型为 voice 时，需要配置 `misc -> web`，其中 `root_directory` 为服务器 web 服务的根目录，`host` 为通过公网访问 web 服务的 url
+4. 使用积分兑换，且兑换物类型为 voice 时，需要配置 `misc -> web`，其中 `root_directory` 为服务器 web 服务的根目录，`host` 为通过公网访问 web 服务的 url（并且该功能仅在服务器上部署时有效）
 
 <br>
 
