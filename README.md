@@ -29,17 +29,21 @@
 
 这是个一时兴起而产出的项目，起因是觉得平时混的一个群的 bot 不够好玩，直接原因是 [koi 欢](https://space.bilibili.com/210127180) 实在是太可爱了。所以，一个为 koi 定制的 bot —— Koi Bot 诞生了
 
-#### 编程语言
+### 编程语言
 
 Python3
 
-#### 实现思路
+<br>
+
+### 实现思路
 
 1. 搭建本地 server 与 go-cqhttp 的反向 HTTP 代理对接，获取 bot 所在 qq 群的消息及事件
 2. 解析消息和事件的语义，生成响应消息
 3. 响应消息交由 go-cqhttp 的 API 发送到群里，实现与群友的互动
 
-#### 技术栈
+<br>
+
+### 技术栈
 
 1. 装饰器
 2. 面向对象
@@ -50,11 +54,15 @@ Python3
 
 PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 
-#### 开发周期
+<br>
+
+### 开发周期
 
 利用一些课余的零碎时间，前前后后共花了两个星期来完成初始版本的开发和部署
 
-#### 小声 bb
+<br>
+
+### 小声 bb
 
 欢迎大家来 [qq群](https://jq.qq.com/?_wv=1027&k=e4okN6Q5) 调戏 kb，希望群大佬能为 kb 开发更多的功能。使用过程中遇到 bug 或者对 kb 有什么建议，麻烦私聊我或者提 Issue，Thanks♪(･ω･)ﾉ
 
@@ -278,7 +286,7 @@ cd go_cqhttp
 <br>
 
 <h3 id="self_config">Koi Bot 自身配置</h3>
-项目根目录下有一个 **setting.json** 配置文件，这里进行逐行解释
+项目根目录下有一个 <strong>setting.json</strong> 配置文件，这里进行逐行解释
 
 ```c++
 {
@@ -387,7 +395,7 @@ cd go_cqhttp
     }
   },
 
-  /* 杂项 */
+  // 杂项
   "misc": {
     "log_directory": "D:\\log",       // 日志存放目录
     "cache_directory": "D:\\cache",   // 缓存目录
