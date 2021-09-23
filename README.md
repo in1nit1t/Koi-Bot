@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.loli.net/2021/09/21/c9DMFSUVONI8mg4.png" width="200" height="200" alt="go-cqhttp">
+  <img src="https://i.loli.net/2021/09/21/c9DMFSUVONI8mg4.png" width="200" height="200">
 </p>
 
 <div align="center">
@@ -17,7 +17,7 @@
   <a href="https://github.com/Mrs4s/go-cqhttp/">
     <img src="https://img.shields.io/badge/go--cqhttp-1.0.0-orange" alt="go-cqhttp">
   </a>
-  <a href="https://github.com/Mrs4s/go-cqhttp/releases">
+  <a href="https://www.python.org/">
     <img src="https://img.shields.io/badge/python-3.7%2B-green?logo=python" alt="python">
   </a>
   <a href="https://www.mysql.com/">
@@ -142,7 +142,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 首先从 go-cqhttp 的 [release](https://github.com/Mrs4s/go-cqhttp/releases) 页面下载最新版可执行程序：
 
 <p align="center">
-![Windows可执行程序](https://i.loli.net/2021/09/21/F9khMzoby8Duiml.png)
+<img src="https://i.loli.net/2021/09/21/F9khMzoby8Duiml.png">
 </p>
 
 以 **64** 位系统为例，下载 **go-cqhttp_windows_amd64.zip** 并解压（当然直接下载 exe 也是可以的）
@@ -150,7 +150,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 运行 go-cqhttp.exe，会提示没有找到配置文件，这里输入 **1**，然后回车：
 
 <p align="center">
-![生成配置文件](https://i.loli.net/2021/09/21/nEah3jtdFODqiGI.png)
+<img src="https://i.loli.net/2021/09/21/nEah3jtdFODqiGI.png">
 </p>
 
 关闭控制台，此时同级目录下会生成一个 **config.yml** 文件，使用文本编辑器将其打开，修改以下三项：
@@ -160,9 +160,9 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 - servers -> http -> post：增加 url 子项，值为 `127.0.0.1:5701`（注意在 url 前面添加短横）
 
 <p align="center">
-![修改account配置项](https://i.loli.net/2021/09/21/U9gNRehDoLarp6S.png)
+<img src="https://i.loli.net/2021/09/21/U9gNRehDoLarp6S.png">
 
-![开启反向http代理](https://i.loli.net/2021/09/21/7ZhYAOQzJ6B1TGq.png)
+<img src="https://i.loli.net/2021/09/21/7ZhYAOQzJ6B1TGq.png">
 </p>
 
 <br>
@@ -180,7 +180,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 3. `source [koibot.sql文件所在的路径];` 导入数据表
 
 <p align="center">
-![数据库操作](https://i.loli.net/2021/09/21/8tjsHLfCbnAiKE1.png)
+<img src="https://i.loli.net/2021/09/21/8tjsHLfCbnAiKE1.png">
 </p>
 
 <br>
@@ -217,7 +217,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 首先从 go-cqhttp 的 [release](https://github.com/Mrs4s/go-cqhttp/releases) 页面下载最新版可执行程序到服务器：
 
 <p align="center">
-![Linux可执行程序](https://i.loli.net/2021/09/21/qAYpJZwiUWgxCf8.png)
+<img src="https://i.loli.net/2021/09/21/qAYpJZwiUWgxCf8.png">
 </p>
 
 执行下列命令：
@@ -280,7 +280,7 @@ cd go_cqhttp
 <h3 id="self_config">Koi Bot 自身配置</h3>
 项目根目录下有一个 **setting.json** 配置文件，这里进行逐行解释
 
-```json
+```c++
 {
   // 账号信息相关配置
   "account": {
