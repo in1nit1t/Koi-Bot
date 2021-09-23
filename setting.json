@@ -1,0 +1,110 @@
+{
+  "account": {
+    "qq": {
+      "bot": 123456789,
+      "koi": 987654321,
+      "admin": 123456789,
+      "target_group": 976519594
+    },
+    "bilibili": {
+      "koi_uid": 210127180
+    }
+  },
+  "database": {
+    "user": "root",
+    "host": "localhost",
+    "db_name": "koi_bot",
+    "db_password": "XXXXXXXXX"
+  },
+  "service": {
+    "group": {
+      "sign_in": {
+        "enable": true,
+        "base_points": 3,
+        "refresh_time": {
+          "hour": 5,
+          "minute": 0
+        }
+      },
+      "jichou": {
+        "enable": true,
+        "version": "old"
+      },
+      "auto_save": {
+        "enable" : false,
+        "voice": {
+          "enable": true,
+          "target_qq": [123456789]
+        }
+      },
+      "bilibili": {
+        "notice": {
+          "new_post": {
+            "enable": true,
+            "with_screenshot": true
+          },
+          "new_dynamic": {
+            "enable": true,
+            "with_screenshot": true
+          },
+          "new_dynamic_forwarding": {
+            "enable": true,
+            "with_screenshot": true
+          },
+          "new_follower": {
+            "enable": false,
+            "with_avatar": true
+          }
+        }
+      },
+      "message_context": {
+        "enable": true,
+        "fudu_limit_count": 5,
+        "probability": {
+          "haohaohao": 30,
+          "haoye": 30,
+          "cao": 30,
+          "jxt": 30,
+          "shiba": 30,
+          "fudu_break": 30
+        },
+        "bai_lan_mode": {
+          "enable": true,
+          "recovery_time": 180
+        }
+      },
+      "poke": {
+        "enable": true,
+        "ban": {
+          "limit_times": 3,
+          "probability": 50,
+          "time": 60
+        },
+        "voice_source": "kugimiya"
+      },
+      "cosplay": {
+        "enable": false
+      }
+    }
+  },
+  "api": {
+    "baidu_translate": {
+      "appid": 99999999999999999,
+      "secret_key": "XXXXXXXXXXXXXXXXXXXX"
+    },
+    "alapi": {
+      "token": "XXXXXXXXXXXXXXXX"
+    }
+  },
+  "misc": {
+    "log_directory": "D:\\log",
+    "cache_directory": "D:\\cache",
+    "web": {
+      "root_directory": "/usr/share/nginx/html",
+      "host": "https://abc.xyz"
+    },
+    "executable_path": {
+      "chrome_driver": "D:\\chromedriver.exe"
+    }
+  }
+}

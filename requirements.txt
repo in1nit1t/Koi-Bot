@@ -1,0 +1,7 @@
+Pillow~=7.0.0
+PyMySQL~=1.0.2
+requests~=2.22.0
+jieba~=0.42.1
+selenium~=3.141.0
+lxml~=4.3.3
+PyExecJs~=1.5.1
