@@ -1,6 +1,6 @@
-<center>
+<p align="center">
   <img src="https://i.loli.net/2021/09/21/c9DMFSUVONI8mg4.png" width="200" height="200" alt="go-cqhttp">
-</center>
+</p>
 
 
 
@@ -10,7 +10,7 @@
 
 </div>
 
-<center>
+<p align="center">
   <a href="https://github.com/in1nit1t/Koi-Bot/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/Mrs4s/go-cqhttp?color=blue" alt="license">
   </a>
@@ -23,7 +23,7 @@
   <a href="https://www.mysql.com/">
     <img src="https://img.shields.io/badge/mysql-8.0.17%2B-d42328?logo=mysql" alt="mysql">
   </a>
-</center>
+</p>
 
 ## 简介
 
