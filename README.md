@@ -2,7 +2,7 @@
   <img src="https://i.loli.net/2021/09/21/c9DMFSUVONI8mg4.png" width="200" height="200" alt="go-cqhttp">
 </p>
 
-
+<div align="center">
 
 # Koi Bot
 
