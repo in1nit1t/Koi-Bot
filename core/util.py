@@ -91,6 +91,12 @@ class Util:
         relative_path = f"./resource/image/{image_type}/{filename}"
         return os.path.abspath(relative_path)
 
+    # GET IMAGE RESOURCE DIR
+    @staticmethod
+    def get_image_resource_dir(image_type: str):
+        relative_path = f"./resource/image/{image_type}"
+        return os.path.abspath(relative_path)
+
     # GET FONT RESOURCE PATH
     @staticmethod
     def get_font_resource(font_name: str) -> str:
