@@ -62,4 +62,4 @@ class SignInDAO(Database):
 
     # FIRST TIME SIGN IN
     def first_time_sign_in(self, uid):
-        return self.update_discontinuous(uid, first_time=True)
+        return self.update_discontinuous(uid, True)

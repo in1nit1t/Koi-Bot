@@ -64,7 +64,7 @@ class SignIn:
             return Util.bot_error_response()
         signed, last_time, continuous, max_continuous, total = data
         msg = f"今天{'已经签到了捏' if signed else '还没有签到捏'}\n"
-        msg += f"上次签到时间：{last_time}\n"
+        msg += f"上次签到时间：{last_time if last_time else '上次签到的时候还是上次'}\n"
         msg += f"当前连续签到天数：{continuous}天\n"
         msg += f"最大连续签到天数：{max_continuous}天\n"
         msg += f"累计签到次数：{total}次"
