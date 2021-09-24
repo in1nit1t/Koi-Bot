@@ -56,12 +56,12 @@ class MessageHandler(Thread):
 
         # RESTORE PROPERTY
         self.message = content["message"]
-        self.group_uin = content["group_id"]
-        self.anonymous = content["anonymous"]
         self.message_id = content["message_id"]
         self.message_type = content["message_type"]
         self.sender_uin = content["sender"]["user_id"]
         self.raw_message = content["raw_message"].strip()
+        self.group_uin = content["group_id"] if content.__contains__("group_id") else ''
+        self.anonymous = content["anonymous"] if content.__contains__("anonymous") else ''
 
         # LOAD RESOURCE
         self.msg_ctx_corpora = Util.load_corpora_resource("message_context")
@@ -307,7 +307,7 @@ class MessageHandler(Thread):
 
         # COSPLAY PICTURE
         elif command.lower() in ["cos", "coser", "cosplay"] and g_group_service_config["cosplay"]["enable"]:
-            msg = Cosplay.random_picture()
+            msg = Cosplay.random_pic()
 
         # TU WEI QING HUA
         elif command in ["情话", "土味情话", "twqh"]:
@@ -431,8 +431,8 @@ class MessageHandler(Thread):
                 g_bai_lan_clock = Clock(g_group_msg_ctx_config["bai_lan_mode"]["recovery_time"])
                 msg = Util.local_picture_pack(Util.get_image_resource("bailan", "bailan.jpg"))
                 g_bai_lan_lock.release()
-
-            return CQHTTP.send_group_message(msg)
+            if msg:
+                return CQHTTP.send_group_message(msg)
 
         # HAO HAO HAO
         if "好好好" in raw_message or re.search(r"^好{1,2}$", raw_message):
@@ -484,18 +484,31 @@ class MessageHandler(Thread):
             )
             if sent: return
 
+    # DISPATCH THE MESSAGE TO DIFFERENT PRIVATE SERVICE
+    def private_service_dispatch(self):
+        raw_message = re.sub(r" +", ' ', self.raw_message).split(' ')
+        command = raw_message[0]
+
+        if command in ["cos更新", "更新cos"]:
+            Cosplay.update_pic()
+
     # OVERRIDE
     def run(self):
-        if self.group_uin != self.target_group:
-            return
-
-        # RECORD SPEAK TIMES AND ENSURE THE MESSAGE IS MEANINGFUL
-        speak_ranking.record(self.sender_uin)
-        if not self.raw_message:
-            return
+        # PRIVATE MESSAGE
+        if self.message_type == "private":
+            return self.private_service_dispatch()
 
         # GROUP MESSAGE
-        if self.message_type == "group" and not self.anonymous:
+        elif self.message_type == "group":
+            # LISTEN ON TARGET GROUP & AVOID ANONYMOUS
+            if self.group_uin != self.target_group or self.anonymous:
+                return
+
+            # RECORD SPEAK TIMES AND ENSURE THE MESSAGE IS MEANINGFUL
+            speak_ranking.record(self.sender_uin)
+            if not self.raw_message:
+                return
+
             # AUTO SAVE CHECK IF ENABLED
             if g_auto_save_config["enable"]:
                 self.auto_save_check()
@@ -507,6 +520,3 @@ class MessageHandler(Thread):
 
             # SERVICE DISPATCH
             self.group_service_dispatch()
-        elif self.message_type == "private":
-            # TODO
-            pass

@@ -83,7 +83,7 @@
         "voice_source": "kugimiya"
       },
       "cosplay": {
-        "enable": false
+        "enable": true
       }
     }
   },
