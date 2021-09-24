@@ -8,6 +8,7 @@ class RequestHandler(Thread):
     # INIT SETTINGS
     def __init__(self, content):
         super().__init__()
+        self.daemon = True
 
         self.flag = content["flag"]
         self.comment = content["comment"]

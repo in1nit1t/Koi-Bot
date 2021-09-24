@@ -40,6 +40,7 @@ g_bai_lan_lock = threading.Lock()
 
 
 class MessageHandler(Thread):
+
     # FREQUENTLY USED CONFIG
     fudu_limit_count = g_group_msg_ctx_config["fudu_limit_count"]
     bai_lan_mode_enable = g_group_msg_ctx_config["bai_lan_mode"]["enable"]
@@ -51,6 +52,7 @@ class MessageHandler(Thread):
     # INIT SETTINGS
     def __init__(self, content):
         super().__init__()
+        self.daemon = True
 
         # RESTORE PROPERTY
         self.message = content["message"]

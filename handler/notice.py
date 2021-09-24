@@ -19,6 +19,7 @@ class NoticeHandler(Thread):
     # INIT SETTINGS
     def __init__(self, content):
         super().__init__()
+        self.daemon = True
 
         # RESTORE PROPERTY
         self.self_uin = content["self_id"]
