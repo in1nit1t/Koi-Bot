@@ -255,29 +255,8 @@ cd go_cqhttp
 
 1. 依照 [Koi Bot 自身配置](#self_config) 版块对**账号、数据库、API、杂项**部分进行配置
 2. 确保命令行工作路径在项目根路径下，测试 `python3 main.py` 命令是否正常执行，而后退出并执行 `nohup python3 main.py > /dev/null 2>&1 &` 命令，将进程长期挂在后台
-3. 执行 `./go-cqhttp`，等待一段时间，控制台会输出一个二维码，使用 bot 的 qq 扫描登录，登陆成功后退出并执行 `nohup ./go-cqhttp > /dev/null 2>cqlog &` 命令，将进程长期挂在后台
+3. 执行 `./go-cqhttp`，等待一段时间，控制台会输出一个二维码，使用 bot 的 qq 扫描登录，登陆成功后退出并执行 `nohup ./go-cqhttp > /dev/null 2>&1 &` 命令，将进程长期挂在后台
 4. 确保 bot 在监听的群中，在群里发送 **菜单** 命令，开始使用 bot
-
-<br>
-
-> go-cqhttp 日志管理
-
-上个版块第 3 点命令中的 `2>cqlog` 会将标准错误流重定向到 cqlog 文件，这样查看 cqlog 文件就能获得 go-cqhttp 程序的日志输出
-
-不过这个文件大小会随着时间推进越来越大，这里推荐使用 **logrotate** 来自动地分割日志和丢弃旧日志，参考文章 [日志切割之Logrotate](https://www.cnblogs.com/clsn/p/8428257.html)，下面贴出我的配置文件（/etc/logrotate.d/cqlog）
-
-```
-/home/in1t/koibot/cqlog {
-    daily
-    dateext
-    rotate 5
-    missingok
-    create 644 in1t in1t
-    postrotate
-        /usr/bin/killall -HUP rsyslogd
-    endscript
-}
-```
 
 <br>
 
@@ -423,6 +402,14 @@ cd go_cqhttp
    -  Windows 下：下载 chrome 浏览器，在其中访问 [设置页面](chrome://settings/help)，查看版本号，再到 [驱动下载网站](https://npm.taobao.org/mirrors/chromedriver/) 下载对应版本的驱动压缩包并解压
    -  Linux 下：参考 [CSDN 文章](https://blog.csdn.net/qq_42396168/article/details/89784436)
 4. 使用积分兑换，且兑换物类型为 voice 时，需要配置 `misc -> web`，其中 `root_directory` 为服务器 web 服务的根目录，`host` 为通过公网访问 web 服务的 url（并且该功能仅在服务器上部署时有效）
+
+<br>
+
+### 报错与日志
+
+1. bot 发生的错误会向 setting.json 中配置的 `account -> qq -> admin` 用户发送
+2. bot 日志存放路径由 `misc -> log_directory` 指定，请确保这个目录存在
+3. go-cqhttp 的日志存放在其项目根目录的 **logs** 文件夹下
 
 <br>
 
