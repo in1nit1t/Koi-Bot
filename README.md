@@ -430,6 +430,12 @@ cd go_cqhttp
 
 <br>
 
+## 更新日志
+
+见 [Koi Bot项目开发记录](https://in1t.top/2021/09/23/Koi-Bot%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/)
+
+<br>
+
 ## 鸣谢
 
 - [go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
