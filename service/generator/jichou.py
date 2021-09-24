@@ -33,7 +33,7 @@ class JiChou:
             # CROP IF SHORTER
             if current_y < image_height:
                 image = image.crop((0, 0, image_width, current_y))
-            return "记下来了哟~\n" + Util.base64_picture_pack(Util.picture2base64(image))
+            return "记下来了哟~" + Util.base64_picture_pack(Util.picture2base64(image))
         except:
             logger.error("<记仇表情包> 生成失败", traceback.format_exc())
             return Util.bot_error_response()
