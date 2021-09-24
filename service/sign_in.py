@@ -1,4 +1,3 @@
-import traceback
 from datetime import timedelta, datetime
 
 from core.util import Util
