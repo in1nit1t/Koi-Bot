@@ -22,8 +22,6 @@ class Logger:
         self._logger.setLevel(logging.INFO)
         self._logger.addHandler(time_handler)
 
-        self.admin_uin = setting["account"]["qq"]["admin"]
-
     # INFORMATION LOG
     def info(self, msg):
         self._logger.info(f"- INFO - {msg}")
@@ -36,24 +34,24 @@ class Logger:
     def warning(self, keyword, msg, notice=False):
         msg = msg.strip()
         if notice:
-            from core.util import CQHTTP
-            CQHTTP.send_private_message(f"[{datetime.now()}] WARNING\n\n{keyword}\n\n{msg}", self.admin_uin)
+            from core.util import Util
+            Util.notice_admin(f"[{datetime.now()}] WARNING\n\n{keyword}\n\n{msg}")
         self._logger.error(f"- WARNING - \n{msg}")
 
     # ERROR LOG
     def error(self, keyword, msg, notice=True):
         msg = msg.strip()
         if notice:
-            from core.util import CQHTTP
-            CQHTTP.send_private_message(f"[{datetime.now()}] ERROR\n\n{keyword}\n\n{msg}", self.admin_uin)
+            from core.util import Util
+            Util.notice_admin(f"[{datetime.now()}] ERROR\n\n{keyword}\n\n{msg}")
         self._logger.error(f"- ERROR - \n{msg}")
 
     # CRITICAL ERROR LOG
     def critical(self, keyword, msg, notice=True):
         msg = msg.strip()
         if notice:
-            from core.util import CQHTTP
-            CQHTTP.send_private_message(f"[{datetime.now()}] !CRITICAL!\n\n{keyword}\n\n{msg}", self.admin_uin)
+            from core.util import Util
+            Util.notice_admin(f"[{datetime.now()}] !CRITICAL!\n\n{keyword}\n\n{msg}")
         self._logger.critical(f"- !CRITICAL! - \n{msg}")
 
 
