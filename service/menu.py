@@ -21,13 +21,17 @@ class Menu:
     12. 好好说话
     13. 生成绝绝子
     14. 生成记仇表情包
+    15. cosplay图片
 
     PS. [菜单 序号] 可以展示对应功能的详细说明，示例：菜单 2
     """
 
     # MENU DETAIL
     function1 = """
-    ？
+    还真有人会看这里呀，那顺便打个广告吧
+    
+    Koi Bot 项目地址：https://github.com/in1nit1t/Koi-Bot
+    欢迎大佬们贡献代码和想法，一起用爱发电捏~
     """
 
     function2 = """
@@ -148,6 +152,12 @@ class Menu:
     示例：记仇 今天koi把我鸽了，这个仇我记下了
     """
 
+    function15 = """
+    cosplay图片指令格式：
+
+    [cos/coser/cosplay]
+    """
+
     # FORMAT THE OUTPUT
     @staticmethod
     def format(raw):
@@ -163,7 +173,7 @@ class Menu:
     def detail(seq):
         if not seq.isdigit():
             return Util.bot_invalid_input_response()
-        if 1 <= int(seq) <= 14:
+        if 1 <= int(seq) <= 15:
             return Menu.format(eval(f"Menu.function{seq}"))
         else:
             return Util.bot_invalid_input_response()
