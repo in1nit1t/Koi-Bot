@@ -93,6 +93,7 @@ class Decorator:
         @wraps(func)
         def try_except(*args):
             try:
+                args[0].connect.ping(reconnect=True)
                 func(*args)
                 args[0].connect.commit()
                 return args[0].cursor.lastrowid
@@ -108,6 +109,7 @@ class Decorator:
         @wraps(func)
         def try_except(*args):
             try:
+                args[0].connect.ping(reconnect=True)
                 func(*args)
                 args[0].connect.commit()
                 return True
@@ -123,6 +125,7 @@ class Decorator:
         @wraps(func)
         def try_except(*args):
             try:
+                args[0].connect.ping(reconnect=True)
                 func(*args)
                 return args[0].cursor.fetchone()
             except:
@@ -136,6 +139,7 @@ class Decorator:
         @wraps(func)
         def try_except(*args):
             try:
+                args[0].connect.ping(reconnect=True)
                 func(*args)
                 return args[0].cursor.fetchall()
             except:
