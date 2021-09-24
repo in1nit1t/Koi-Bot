@@ -72,17 +72,18 @@ class SignIn:
 
     # DO SIGN IN
     def exec(self):
+        # GET UID & HISTORY SIGN IN INFO
         uid = self.sign_in_dao.get_uid_by_uin(self.uin)
         if not uid:
             return Util.bot_error_response()
-
         info = self.sign_in_dao.select_signed_time(uid)
         if not info:
             return Util.bot_error_response()
+
         signed, last_time = info
         if not signed:
-            if last_time is None:
-                ret = self.sign_in_dao.update_discontinuous(uid)
+            if last_time is None:   # FIRST TIME
+                ret = self.sign_in_dao.first_time_sign_in(uid)
             else:
                 if datetime.now() - last_time < timedelta(hours=24):
                     ret = self.sign_in_dao.update_continuous(uid)

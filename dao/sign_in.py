@@ -25,9 +25,9 @@ class SignInDAO(Database):
 
     # UPDATE DISCONTINUOUS SIGN IN
     @Decorator.db_modify
-    def update_discontinuous(self, uid):
-        sql = "update sign_in set `signed`=1, `last_time`=CURRENT_TIMESTAMP, \
-              `continuous`=1, `total`=`total`+1 where `uid`=%s"
+    def update_discontinuous(self, uid, first_time=False):
+        sql = "update sign_in set `signed`=1, `last_time`=CURRENT_TIMESTAMP, `continuous`=1, " \
+              f"`total`=`total`+1{', `max_continuous`=1' if first_time else ''} where `uid`=%s"
         self.cursor.execute(sql, uid)
 
     # SELECT SIGN IN ORDER
@@ -59,3 +59,7 @@ class SignInDAO(Database):
     def select_all_by_uin(self, uin):
         uid = self.get_uid_by_uin(uin)
         return self.select_all(uid) if uid else False
+
+    # FIRST TIME SIGN IN
+    def first_time_sign_in(self, uid):
+        return self.update_discontinuous(uid, first_time=True)
