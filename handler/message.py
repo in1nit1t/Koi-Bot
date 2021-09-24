@@ -311,7 +311,7 @@ class MessageHandler(Thread):
 
         # COSPLAY PICTURE
         elif command.lower() in ["cos", "coser", "cosplay"] and g_group_service_config["cosplay"]["enable"]:
-            msg = Cosplay.random_pic()
+            CQHTTP.send_group_message(Cosplay.random_pic())
 
         # TU WEI QING HUA
         elif command in ["情话", "土味情话", "twqh"]:

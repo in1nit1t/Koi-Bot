@@ -41,9 +41,7 @@ class Cosplay:
         pics = os.listdir(random_dir)
         if not pics:
             return Util.bot_error_response()
-
-        msg = Util.local_picture_pack(os.path.join(random_dir, random.choice(pics)))
-        return "收好了捏~" + msg
+        return Util.local_picture_pack(os.path.join(random_dir, random.choice(pics)))
 
     # SAVE PICTURE THREAD
     class _SavePicThread(threading.Thread):
