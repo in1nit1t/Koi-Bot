@@ -14,7 +14,7 @@ class Logger:
         file_path = os.path.join(log_dir, "botlog")
         time_handler = TimedRotatingFileHandler(file_path, when="midnight", backupCount=5, encoding="utf-8")
         time_handler.setLevel(logging.INFO)
-        time_handler.suffix = "%Y-%m-%d.log"
+        time_handler.suffix = "%Y-%m-%d_%H-%M-%S.log"
         time_handler.setFormatter(logging.Formatter(fmt='[%(asctime)s] %(message)s'))
 
         # ADD HANDLE TO LOGGER
