@@ -104,7 +104,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 14. 生成器
     - 生成绝绝子
     - 生成记仇表情包
-15. coser图片
+15. cosplay图片
 </details>
 
 <details>
