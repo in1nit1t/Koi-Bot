@@ -66,6 +66,10 @@ class MessageHandler(Thread):
         # LOAD RESOURCE
         self.msg_ctx_corpora = Util.load_corpora_resource("message_context")
 
+    # CHECK IF USER IS BOT ADMIN
+    def is_bot_admin(self):
+        return str(self.sender_uin) == str(setting["account"]["qq"]["admin"])
+
     # CHECK IF IS A EXCHANGE COMMAND
     def is_exchange_command(self):
         return re.search(r"^兑换.+", self.raw_message)
@@ -489,7 +493,7 @@ class MessageHandler(Thread):
         raw_message = re.sub(r" +", ' ', self.raw_message).split(' ')
         command = raw_message[0]
 
-        if command in ["cos更新", "更新cos"]:
+        if command in ["cos更新", "更新cos"] and self.is_bot_admin():
             Cosplay.update_pic()
 
     # OVERRIDE

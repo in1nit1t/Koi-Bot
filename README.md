@@ -104,6 +104,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 14. 生成器
     - 生成绝绝子
     - 生成记仇表情包
+15. coser图片
 </details>
 
 <details>
@@ -402,6 +403,7 @@ cd go_cqhttp
    -  Windows 下：下载 chrome 浏览器，在其中访问 [设置页面](chrome://settings/help)，查看版本号，再到 [驱动下载网站](https://npm.taobao.org/mirrors/chromedriver/) 下载对应版本的驱动压缩包并解压
    -  Linux 下：参考 [CSDN 文章](https://blog.csdn.net/qq_42396168/article/details/89784436)
 4. 使用积分兑换，且兑换物类型为 voice 时，需要配置 `misc -> web`，其中 `root_directory` 为服务器 web 服务的根目录，`host` 为通过公网访问 web 服务的 url（并且该功能仅在服务器上部署时有效）
+5. 使用 cosplay 模块时，需要由 admin 用户向 bot 私聊发送 `更新cos` 指令来爬取图库
 
 <br>
 
