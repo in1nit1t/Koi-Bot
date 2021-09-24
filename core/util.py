@@ -226,7 +226,7 @@ class Util:
     # NOTICE ADMIN
     @staticmethod
     def notice_admin(msg: str) -> None:
-        CQHTTP.send_private_message(setting["account"]["qq"]["admin"], msg)
+        CQHTTP.send_private_message(msg, setting["account"]["qq"]["admin"])
 
     # GET A RANDOM ERROR RESPONSE
     @staticmethod
