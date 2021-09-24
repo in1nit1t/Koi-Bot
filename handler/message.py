@@ -53,6 +53,7 @@ class MessageHandler(Thread):
     def __init__(self, content):
         super().__init__()
         self.daemon = True
+        self.setDaemon(True)
 
         # RESTORE PROPERTY
         self.message = content["message"]
