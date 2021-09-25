@@ -332,7 +332,7 @@ class MessageHandler(Thread):
         elif command == "好好说话":
             if len(raw_message) > 1:
                 hhsh = AlApi.hao_hao_shuo_hua(raw_message[1])
-                msg = hhsh if hhsh else "技能CD中..."
+                msg = hhsh if hhsh else "确实不知道在说什么"
             else:
                 msg = Util.bot_invalid_input_response()
 
