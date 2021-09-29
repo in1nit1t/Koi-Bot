@@ -104,7 +104,7 @@ class Bilibili:
         except:
             logger.error(f"<Bilibili> {dynamic_id} 图片裁剪失败", traceback.format_exc())
             return False
-        driver.close()
+        driver.quit()
         return save_path
 
         # GET FOLLOWER COUNT
