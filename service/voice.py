@@ -18,7 +18,7 @@ class Voice:
     def send(self, vid, filename):
         data = CQHTTP.send_group_message(Util.online_voice_pack(filename))
         if data:
-            second_message = Util.reply_at_pack(f"收好了捏，本条语音id：{vid}", data["message_id"], self.to)
+            second_message = Util.at_pack(f"收好了捏，本条语音id：{vid}", self.to)
             CQHTTP.send_group_message(second_message)
 
     # RETURN KOI'S VOICE RANDOMLY
