@@ -65,6 +65,8 @@ class Periodic:
                 msg += Util.local_picture_pack(screenshot_path)
 
         msg += f"传送门 -> {Bilibili.dynamic_base_url}/{dynamic_id}"
+        if dynamic_type == 8 and Util.can_at_all():     # AT ALL WHEN NOW POST
+            msg = Util.at_pack(msg, "all")
         CQHTTP.send_group_message(msg)
         self.previous_dynamic_info = latest_dynamic_info
 

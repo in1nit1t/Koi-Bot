@@ -215,6 +215,14 @@ class Util:
         friend_list = CQHTTP.get_friend_list()
         return re.search(f"'user_id': {target_uin}", str(friend_list)) is not None
 
+    # CHECK IF CAN AT ALL
+    @staticmethod
+    def can_at_all() -> bool:
+        data = CQHTTP.group_at_all_remain()
+        if data:
+            return data["can_at_all"] and data["remain_at_all_count_for_uin"] > 0
+        return False
+
     # CHECK IF USER IS ADMIN / OWNER
     @staticmethod
     def has_high_privilege(uin: str) -> bool:
@@ -298,6 +306,12 @@ class CQHTTP:
         }
         return params
 
+    # GET AT ALL REMAIN
+    @staticmethod
+    @Decorator.cqhttp_api("get_group_at_all_remain")
+    def group_at_all_remain() -> dict:
+        return {"group_id": str(setting["account"]["qq"]["target_group"])}
+
     # BAN SINGLE USER
     @staticmethod
     @Decorator.cqhttp_api("set_group_ban")
@@ -350,7 +364,7 @@ class Counter:
         self.dict[key] = 0
         self.lock.release()
 
-
+# SET CLOCK
 class Clock:
 
     # INIT SETTINGS
