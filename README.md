@@ -137,6 +137,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 <summary>私聊主动技能</summary>
 
 1. 更新cos（仅 admin）
+2. 转述（仅群管理/群主）
 </details>
 
 <br>
