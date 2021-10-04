@@ -493,9 +493,17 @@ class MessageHandler(Thread):
         raw_message = re.sub(r" +", ' ', self.raw_message).split(' ')
         command = raw_message[0]
 
-        if command in ["通知"] and Util.has_high_privilege(self.sender_uin):
-            CQHTTP.send_group_message(self.raw_message[3:])
-        if command in ["cos更新", "更新cos"] and self.is_bot_admin():
+        # RETAIL
+        if Util.has_high_privilege(self.sender_uin):
+            if command in ["转述"]:
+                CQHTTP.send_group_message(self.raw_message[3:])
+
+            # RETAIL BILIBILI SHARE
+            elif re.search(r"(\[CQ:json,.+哔哩哔哩.+])", self.raw_message):
+                CQHTTP.send_group_message(self.raw_message)
+
+        # UPDATE COSPLAY PICTURE
+        elif command in ["cos更新", "更新cos"] and self.is_bot_admin():
             Cosplay.update_pic()
 
     # OVERRIDE

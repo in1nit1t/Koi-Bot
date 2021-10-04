@@ -41,7 +41,7 @@ class Periodic:
 
         with_screenshot = False
         g_history_dynamic.append(latest_dynamic_info)
-        dynamic_id, dynamic_type = latest_dynamic_info
+        dynamic_id, dynamic_type, dynamic_link = latest_dynamic_info
         if dynamic_type == 1 and self.notice_config["new_dynamic_forwarding"]["enable"]:  # DYNAMIC FORWARDING
             msg = "koi转发了一条动态~"
             if self.notice_config["new_dynamic_forwarding"]["with_screenshot"]:
@@ -64,9 +64,14 @@ class Periodic:
             if screenshot_path:
                 msg += Util.local_picture_pack(screenshot_path)
 
-        msg += f"传送门 -> {Bilibili.dynamic_base_url}/{dynamic_id}"
-        if dynamic_type == 8 and Util.can_at_all():     # AT ALL WHEN NOW POST
-            msg = Util.at_pack(msg, "all")
+        # ADD DYNAMIC LINK
+        msg += f"传送门 -> "
+        if dynamic_type == 8:
+            msg += dynamic_link
+            if Util.can_at_all():     # AT ALL WHEN NOW POST
+                msg = Util.at_pack(msg, "all")
+        else:
+            msg += f"{Bilibili.dynamic_base_url}/{dynamic_id}"
         CQHTTP.send_group_message(msg)
         self.previous_dynamic_info = latest_dynamic_info
 

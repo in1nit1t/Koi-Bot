@@ -1,5 +1,6 @@
 import os
 import time
+import json
 import traceback
 from PIL import Image
 from selenium import webdriver
@@ -141,8 +142,14 @@ class Bilibili:
         if not cards:
             return None
 
-        description = cards[0]["desc"]
-        return description["dynamic_id_str"], description["type"]
+        dynamic_link = None
+        dynamic_id = cards[0]["desc"]["dynamic_id_str"]
+        dynamic_type = cards[0]["desc"]["type"]
+
+        # SET DYNAMIC LINK IF IS NEW POST
+        if dynamic_type == 8:
+            dynamic_link = json.loads(cards[0]["card"]["short_link"])
+        return dynamic_id, dynamic_type, dynamic_link
 
     # GET LIVE STATUS
     def is_living(self):
