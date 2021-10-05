@@ -10,8 +10,6 @@ from service.sign_in import SignIn
 from service.bilibili import Bilibili
 from service.speak_ranking import speak_ranking
 
-g_history_dynamic = []
-
 
 class Periodic:
 
@@ -21,78 +19,16 @@ class Periodic:
         self.morning_push_flag = True
         self.speak_ranking_flag = True
 
-        # BILIBILI CONFIG
-        self.koi_bilibili = Bilibili(setting["account"]["bilibili"]["koi_uid"])
-        self.previous_follower_count = self.koi_bilibili.follower_count()
-        self.previous_dynamic_info = self.koi_bilibili.latest_dynamic_info()
-        self.notice_config = setting["service"]["group"]["bilibili"]["notice"]
+        # BILIBILI LISTEN USERS
+        self.bilibili_listen = []
+        listen_dict = setting["account"]["bilibili"]["event_listen"]
+        for nick_name, uid in listen_dict.items():
+            self.bilibili_listen.append(Bilibili(uid, nick_name))
 
         # SIGN IN REFRESH TIME
         sign_in_config = setting["service"]["group"]["sign_in"]
         self.sign_in_refresh_hour = int(sign_in_config["refresh_time"]["hour"])
         self.sign_in_refresh_minute = int(sign_in_config["refresh_time"]["minute"])
-
-    # BILIBILI DYNAMIC STATUS CHECK
-    def dynamic_status_check(self):
-        latest_dynamic_info = self.koi_bilibili.latest_dynamic_info()
-        if not latest_dynamic_info or self.previous_dynamic_info == latest_dynamic_info or \
-                latest_dynamic_info in g_history_dynamic:
-            return
-
-        with_screenshot = False
-        g_history_dynamic.append(latest_dynamic_info)
-        dynamic_id, dynamic_type, dynamic_link = latest_dynamic_info
-        if dynamic_type == 1 and self.notice_config["new_dynamic_forwarding"]["enable"]:  # DYNAMIC FORWARDING
-            msg = "koi转发了一条动态~"
-            if self.notice_config["new_dynamic_forwarding"]["with_screenshot"]:
-                with_screenshot = True
-        elif dynamic_type in [2, 4] and self.notice_config["new_dynamic"]["enable"]:  # DYNAMIC
-            msg = "koi发布了新的动态~"
-            if self.notice_config["new_dynamic"]["with_screenshot"]:
-                with_screenshot = True
-        elif dynamic_type == 8 and self.notice_config["new_post"]["enable"]:  # POST
-            msg = "koi发布了新的作品~"
-            if self.notice_config["new_post"]["with_screenshot"]:
-                with_screenshot = True
-        else:
-            return
-        msg += "\n\n"
-
-        # ADD DYNAMIC SCREENSHOT IF ENABLE
-        if with_screenshot:
-            screenshot_path = Bilibili.dynamic_screenshot(dynamic_id)
-            if screenshot_path:
-                msg += Util.local_picture_pack(screenshot_path)
-
-        # ADD DYNAMIC LINK
-        msg += f"传送门 -> "
-        if dynamic_type == 8:
-            msg += dynamic_link
-            if Util.can_at_all():     # AT ALL WHEN NOW POST
-                msg = Util.at_pack(msg, "all")
-        else:
-            msg += f"{Bilibili.dynamic_base_url}/{dynamic_id}"
-        CQHTTP.send_group_message(msg)
-        self.previous_dynamic_info = latest_dynamic_info
-
-    # BILIBILI NEW FOLLOWER NOTICE
-    def new_follower_notice(self):
-        current_follower_count = self.koi_bilibili.follower_count()
-        if current_follower_count == -1:
-            return
-        if self.previous_follower_count < current_follower_count:
-            msg = "有新的小可爱关注了koi哟~"
-
-            # ADD NEW FOLLOWER'S INFO
-            latest_follower = self.koi_bilibili.latest_follower()
-            if latest_follower:
-                msg += "\n\n"
-                nick_name, face_url = latest_follower
-                if self.notice_config["new_follower"]["with_avatar"]:
-                    msg += Util.online_picture_pack(face_url)
-                msg += f"B站昵称：{nick_name}"
-            CQHTTP.send_group_message(msg)
-        self.previous_follower_count = current_follower_count
 
     # MORNING PUSH
     def morning_push(self):
@@ -130,12 +66,16 @@ class Periodic:
         SignIn().refresh()
         self.sign_in_flag = False
 
+    # BILIBILI STATUS CHECK
+    def bilibili_status_check(self):
+        for listener in self.bilibili_listen:
+            listener.dynamic_status_check()
+            if listener.notice_config["new_follower"]["enable"]:
+                listener.new_follower_notice()
+
     # EXECUTE
     def exec(self):
-        # BILIBILI STATUS CHECK
-        self.dynamic_status_check()
-        if self.notice_config["new_follower"]["enable"]:
-            self.new_follower_notice()
+        self.bilibili_status_check()
 
         # CRON JOB
         now = time.strftime("%H:%M:%S", time.localtime())

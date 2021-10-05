@@ -7,9 +7,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 
-from core.util import Util
 from core.logger import logger
 from core.setting import setting
+from core.util import Util, CQHTTP
 from core.decorator import Decorator
 
 
@@ -22,8 +22,13 @@ class Bilibili:
     space_history_url = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history"
 
     # INIT SETTINGS
-    def __init__(self, uid):
+    def __init__(self, uid, nick_name="koi"):
         self.uid = uid
+        self.nick_name = nick_name
+        self.previous_follower_count = self.follower_count()
+        self.previous_dynamic_info = self.latest_dynamic_info()
+        self.history_dynamic = [self.previous_dynamic_info]
+        self.notice_config = setting["service"]["group"]["bilibili"]["notice"]
 
     # GET BASIC STATUS
     @Decorator.bilibili_fetch(basic_status_url)
@@ -108,7 +113,7 @@ class Bilibili:
         driver.quit()
         return save_path
 
-        # GET FOLLOWER COUNT
+    # GET FOLLOWER COUNT
     def follower_count(self):
         status = self.api_basic_status()
         return status["follower"] if status else -1
@@ -160,3 +165,62 @@ class Bilibili:
     def get_avatar_url(self):
         status = self.api_detail_status()
         return status["face"] if status else ''
+
+    # DYNAMIC STATUS CHECK
+    def dynamic_status_check(self):
+        latest_dynamic_info = self.latest_dynamic_info()
+        if not latest_dynamic_info or self.previous_dynamic_info == latest_dynamic_info or \
+                latest_dynamic_info in self.history_dynamic:
+            return
+        self.history_dynamic.append(latest_dynamic_info)
+
+        msg = self.nick_name
+        dynamic_id, dynamic_type, dynamic_link = latest_dynamic_info
+        if dynamic_type == 1 and self.notice_config["new_dynamic_forwarding"]["enable"]:  # DYNAMIC FORWARDING
+            msg += "转发了一条动态~"
+            with_screenshot = self.notice_config["new_dynamic_forwarding"]["with_screenshot"]
+        elif dynamic_type in [2, 4] and self.notice_config["new_dynamic"]["enable"]:  # DYNAMIC
+            msg += "发布了新的动态~"
+            with_screenshot = self.notice_config["new_dynamic"]["with_screenshot"]
+        elif dynamic_type == 8 and self.notice_config["new_post"]["enable"]:  # POST
+            msg += "发布了新的作品~"
+            with_screenshot = self.notice_config["new_post"]["with_screenshot"]
+        else:
+            return
+        msg += "\n\n"
+
+        # ADD DYNAMIC SCREENSHOT IF ENABLE
+        if with_screenshot:
+            screenshot_path = Bilibili.dynamic_screenshot(dynamic_id)
+            if screenshot_path:
+                msg += Util.local_picture_pack(screenshot_path)
+
+        # ADD DYNAMIC LINK
+        msg += f"传送门 -> "
+        if dynamic_type == 8:
+            msg += dynamic_link
+            if Util.can_at_all():  # AT ALL WHEN NOW POST
+                msg = Util.at_pack(msg, "all")
+        else:
+            msg += f"{Bilibili.dynamic_base_url}/{dynamic_id}"
+        CQHTTP.send_group_message(msg)
+        self.previous_dynamic_info = latest_dynamic_info
+
+    # NEW FOLLOWER NOTICE
+    def new_follower_notice(self):
+        current_follower_count = self.follower_count()
+        if current_follower_count == -1:
+            return
+        if self.previous_follower_count < current_follower_count:
+            msg = f"有新的小可爱关注了{self.nick_name}哟~"
+
+            # ADD NEW FOLLOWER'S INFO
+            latest_follower = self.latest_follower()
+            if latest_follower:
+                msg += "\n\n"
+                nick_name, face_url = latest_follower
+                if self.notice_config["new_follower"]["with_avatar"]:
+                    msg += Util.online_picture_pack(face_url)
+                msg += f"B站昵称：{nick_name}"
+            CQHTTP.send_group_message(msg)
+        self.previous_follower_count = current_follower_count

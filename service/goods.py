@@ -55,7 +55,7 @@ class Goods:
     # PACK VOICE GOODS
     @staticmethod
     def voice_goods_pack(name, description):
-        avatar_url = Bilibili(setting["account"]["bilibili"]["koi_uid"]).get_avatar_url()
+        avatar_url = Bilibili(setting["account"]["bilibili"]["koi"]).get_avatar_url()
 
         # COPY FILE TO WEB DIRECTORY
         root_dir = setting["misc"]["web"]["root_directory"]
