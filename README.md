@@ -282,7 +282,11 @@ cd go_cqhttp
       "target_group": 976519594   // bot 监听的 qq 群号
     },
     "bilibili": {
-      "koi_uid": 210127180  // koi 的 bilibili uid
+      "koi": 210127180,  // koi 的 bilibili uid
+      "event_listen": {  // 需要监听动态、直播等信息的昵称及uid
+        "hanser": 11073,
+        "koi": 210127180
+      }
     }
   },
 
