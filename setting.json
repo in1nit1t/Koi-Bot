@@ -7,7 +7,11 @@
       "target_group": 976519594
     },
     "bilibili": {
-      "koi_uid": 210127180
+      "koi": 210127180,
+      "event_listen": {
+        "hanser": 11073,
+        "koi": 210127180
+      }
     }
   },
   "database": {
