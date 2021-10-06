@@ -71,15 +71,10 @@ class Periodic:
     # BILIBILI STATUS CHECK
     def bilibili_status_check(self):
         for listener in self.bilibili_listen:
-            self.bilibili_lock.acquire()
-
-            # CHECK EVENTS (THREAD SAFE)
             listener.live_status_check()
             listener.dynamic_status_check()
             if listener.notice_config["new_follower"]["enable"]:
                 listener.new_follower_notice()
-
-            self.bilibili_lock.release()
 
     # EXECUTE
     def exec(self):
