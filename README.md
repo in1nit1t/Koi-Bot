@@ -285,7 +285,8 @@ cd go_cqhttp
       "koi": 210127180,  // koi 的 bilibili uid
       "event_listen": {  // 需要监听动态、直播等信息的昵称及uid
         "hanser": 11073,
-        "koi": 210127180
+        "koi": 210127180,
+        "弦酱": 1684406381
       }
     }
   },

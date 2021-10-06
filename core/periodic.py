@@ -1,5 +1,6 @@
 import time
 import random
+import threading
 from datetime import datetime
 
 from core.setting import setting
@@ -24,6 +25,7 @@ class Periodic:
         listen_dict = setting["account"]["bilibili"]["event_listen"]
         for nick_name, uid in listen_dict.items():
             self.bilibili_listen.append(Bilibili(uid, nick_name))
+        self.bilibili_lock = threading.Lock()
 
         # SIGN IN REFRESH TIME
         sign_in_config = setting["service"]["group"]["sign_in"]
@@ -69,14 +71,18 @@ class Periodic:
     # BILIBILI STATUS CHECK
     def bilibili_status_check(self):
         for listener in self.bilibili_listen:
+            self.bilibili_lock.acquire()
+
+            # CHECK EVENTS (THREAD SAFE)
+            listener.live_status_check()
             listener.dynamic_status_check()
             if listener.notice_config["new_follower"]["enable"]:
                 listener.new_follower_notice()
 
+            self.bilibili_lock.release()
+
     # EXECUTE
     def exec(self):
-        self.bilibili_status_check()
-
         # CRON JOB
         now = time.strftime("%H:%M:%S", time.localtime())
         if "08:00:00" <= now < "08:00:30" and self.morning_push_flag:
@@ -93,3 +99,5 @@ class Periodic:
             self.sign_in_flag = True
             self.morning_push_flag = True
             self.speak_ranking_flag = True
+
+        self.bilibili_status_check()

@@ -37,7 +37,7 @@ class Decorator:
                 params = func(*args) if args else func()
                 try:
                     url = "https://v2.alapi.cn/api/" + api_name
-                    response = requests.get(url=url, params=params).json()
+                    response = requests.get(url=url, params=params, timeout=3).json()
                 except:
                     logger.error(f"<ALAPI> 调用 /{api_name}/ 失败", traceback.format_exc())
                     return False
@@ -72,7 +72,7 @@ class Decorator:
             def wrapped_function(*args):
                 params = func(*args) if args else func()
                 try:
-                    response = requests.get(url=url, params=params).json()
+                    response = requests.get(url=url, params=params, timeout=3).json()
                 except:
                     logger.error(f"<Bilibili API> 调用 [{url}] 失败", traceback.format_exc())
                     return False

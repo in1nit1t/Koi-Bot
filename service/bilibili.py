@@ -25,6 +25,7 @@ class Bilibili:
     def __init__(self, uid, nick_name="koi"):
         self.uid = uid
         self.nick_name = nick_name
+        self.live_noticed = False
         self.previous_follower_count = self.follower_count()
         self.previous_dynamic_info = self.latest_dynamic_info()
         self.history_dynamic = [self.previous_dynamic_info]
@@ -156,15 +157,28 @@ class Bilibili:
             dynamic_link = json.loads(cards[0]["card"]["short_link"])
         return dynamic_id, dynamic_type, dynamic_link
 
-    # GET LIVE STATUS
-    def is_living(self):
-        status = self.api_detail_status()
-        return status["live_room"]["liveStatus"] if status else False
-
     # GET USER AVATAR
     def get_avatar_url(self):
         status = self.api_detail_status()
         return status["face"] if status else ''
+
+    # LIVE STATUS CHECK
+    def live_status_check(self):
+        status = self.api_detail_status()
+        if not status:
+            return
+
+        live_room = status["live_room"]
+        if live_room["liveStatus"] == 1 and not self.live_noticed:  # LIVING
+            live_url, live_title, live_cover = live_room["url"], live_room["title"], live_room["cover"]
+            msg = f"{self.nick_name}开播啦~\n\n" \
+                  f"{Util.online_picture_pack(live_cover)}\n" \
+                  f"标题：{live_title}\n" \
+                  f"传送门 -> {live_url}"
+            CQHTTP.send_group_message(msg)
+            self.live_noticed = True
+        elif live_room["liveStatus"] == 0:
+            self.live_noticed = False
 
     # DYNAMIC STATUS CHECK
     def dynamic_status_check(self):
