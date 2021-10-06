@@ -14,7 +14,6 @@ from core.setting import setting
 class Cosplay:
 
     base_url = "https://www.moestack.com"
-    cache_directory = setting["misc"]["cache_directory"]
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -53,10 +52,10 @@ class Cosplay:
             self.thread_result = -1
 
         # GET THREAD RESULT
-        # 0: FAILED
-        # 1: SUCCESS
-        # 2: ALREADY SAVED
         def get_result(self) -> int:
+            # 0: FAILED
+            # 1: SUCCESS
+            # 2: ALREADY SAVED
             return self.thread_result
 
         # OVERRIDE
