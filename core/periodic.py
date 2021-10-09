@@ -1,6 +1,5 @@
 import time
 import random
-import threading
 from datetime import datetime
 
 from core.setting import setting
@@ -25,7 +24,6 @@ class Periodic:
         listen_dict = setting["account"]["bilibili"]["event_listen"]
         for nick_name, uid in listen_dict.items():
             self.bilibili_listen.append(Bilibili(uid, nick_name))
-        self.bilibili_lock = threading.Lock()
 
         # SIGN IN REFRESH TIME
         sign_in_config = setting["service"]["group"]["sign_in"]
