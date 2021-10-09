@@ -154,7 +154,7 @@ class Bilibili:
 
         # SET DYNAMIC LINK IF IS NEW POST
         if dynamic_type == 8:
-            dynamic_link = json.loads(cards[0]["card"]["short_link"])
+            dynamic_link = json.loads(cards[0]["card"])["short_link"]
         return dynamic_id, dynamic_type, dynamic_link
 
     # GET USER AVATAR
