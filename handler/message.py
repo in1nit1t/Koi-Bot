@@ -101,7 +101,7 @@ class MessageHandler(Thread):
             command == "点歌" or command[:2] == "翻译" or command.lower() in ["cos", "coser", "cosplay"] or \
             command in ["情话", "土味情话", "twqh"] or command in ["日记", "舔狗日记", "tgrj"] or \
             command in ["鸡汤", "毒鸡汤", "djt"] or command == "好好说话" or \
-            command in ["记仇", "小本本记下来", "这仇我记下了", "这个仇我记下了"] or \
+            command in ["记仇", "小本本记下来", "这仇我记下了", "这个仇我记下了"] or re.search(r"^(.{0,11}疫情$)", command) or \
             command == f"[CQ:at,qq={setting['account']['qq']['bot']}]" or self.is_generate_command() or \
             self.is_save_command() or self.is_delete_command()
 

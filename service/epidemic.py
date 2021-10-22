@@ -42,16 +42,17 @@ class Epidemic:
         rate = self.data["areaTree"][0]["total"]
         ret = f"全国疫情情况\n" \
               f"数据更新时间：{self.data['lastUpdateTime']}\n" \
-              f"{'-' * 20}\n【实时数据】\n\n" \
-              f"本土现有确诊：{info['localConfirm']}（较昨日{'+' if diff['localConfirm'] >= 0 else ''}{diff['localConfirm']}）\n" \
-              f"现有确诊（含港澳台）：{info['nowConfirm']}（较昨日{'+' if diff['nowConfirm'] >= 0 else ''}{diff['nowConfirm']}）\n" \
-              f"无症状感染者：{info['noInfect']}（较昨日{'+' if diff['noInfect'] >= 0 else ''}{diff['noInfect']}）\n" \
-              f"境外输入：{info['importedCase']}（较昨日{'+' if diff['importedCase'] >= 0 else ''}{diff['importedCase']}）\n" \
-              f"疑似病例：{info['suspect']}（较昨日{'+' if diff['suspect'] >= 0 else ''}{diff['suspect']}）" \
-              f"{'-' * 20}\n【累计数据】\n\n" \
-              f"累计确诊：{info['confirm']}（较昨日+{diff['confirm']}）\n" \
-              f"累计死亡：{info['dead']}（较昨日+{diff['dead']}）\n" \
-              f"累计治愈：{info['heal']}（较昨日+{diff['heal']}）\n" \
+              f"注：（+xx）表示与昨日的差别\n" \
+              f"{'-' * 20}\n【实时数据】\n" \
+              f"本土现有确诊：{info['localConfirm']}（{'+' if diff['localConfirm'] >= 0 else ''}{diff['localConfirm']}）\n" \
+              f"现有确诊（含港澳台）：{info['nowConfirm']}（{'+' if diff['nowConfirm'] >= 0 else ''}{diff['nowConfirm']}）\n" \
+              f"无症状感染者：{info['noInfect']}（{'+' if diff['noInfect'] >= 0 else ''}{diff['noInfect']}）\n" \
+              f"境外输入：{info['importedCase']}（{'+' if diff['importedCase'] >= 0 else ''}{diff['importedCase']}）\n" \
+              f"疑似病例：{info['suspect']}（{'+' if diff['suspect'] >= 0 else ''}{diff['suspect']}）\n" \
+              f"{'-' * 20}\n【累计数据】\n" \
+              f"累计确诊：{info['confirm']}（+{diff['confirm']}）\n" \
+              f"累计死亡：{info['dead']}（+{diff['dead']}）\n" \
+              f"累计治愈：{info['heal']}（+{diff['heal']}）\n" \
               f"死亡率：{rate['deadRate']}%\n" \
               f"治愈率：{rate['healRate']}%"
         return ret
