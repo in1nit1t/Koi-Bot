@@ -16,6 +16,7 @@ from service.goods import Goods
 from service.bailan import BaiLan
 from service.sign_in import SignIn
 from service.cosplay import Cosplay
+from service.epidemic import Epidemic
 from service.meme_search import MemeSearch
 from service.generator.jichou import JiChou
 from service.generator.juejuezi import JueJueZi
@@ -309,7 +310,7 @@ class MessageHandler(Thread):
         elif command[:2] == "翻译":
             msg = self.translate(raw_message)
 
-        # COSPLAY PICTURE
+        # COSPLAY MODULE
         elif command.lower() in ["cos", "coser", "cosplay"] and g_group_service_config["cosplay"]["enable"]:
             CQHTTP.send_group_message(Cosplay.random_pic())
 
@@ -340,6 +341,10 @@ class MessageHandler(Thread):
         elif command in ["记仇", "小本本记下来", "这仇我记下了", "这个仇我记下了"] and g_group_service_config["jichou"]["enable"]:
             version = setting["service"]["group"]["jichou"]["version"]
             msg = JiChou(' '.join(raw_message[1:])).generate(version == "new") if len(raw_message) > 1 else "想记点啥？"
+
+        # EPIDEMIC MODULE
+        elif re.search(r"^(.{0,11}疫情$)", command):
+            msg = Epidemic().exec(command)
 
         # AT ME
         elif command == f"[CQ:at,qq={setting['account']['qq']['bot']}]":

@@ -22,6 +22,7 @@ class Menu:
     13. 生成绝绝子
     14. 生成记仇表情包
     15. cosplay图片
+    16. 疫情数据查询
 
     PS. [菜单 序号] 可以展示对应功能的详细说明，示例：菜单 2
     """
@@ -158,6 +159,18 @@ class Menu:
     [cos/coser/cosplay]
     """
 
+    function16 = """
+    疫情数据查询指令格式：
+    
+    1. [疫情]：查询全国疫情概况
+    2. [xxx疫情]：查询xxx地区（省、市级）的疫情情况，xxx中不需要加'省'或'市'的后缀
+    
+    示例：
+    1. 疫情
+    2. 浙江疫情
+    3. 温州疫情
+    """
+
     # FORMAT THE OUTPUT
     @staticmethod
     def format(raw):
@@ -173,7 +186,7 @@ class Menu:
     def detail(seq):
         if not seq.isdigit():
             return Util.bot_invalid_input_response()
-        if 1 <= int(seq) <= 15:
+        if 1 <= int(seq) <= 16:
             return Menu.format(eval(f"Menu.function{seq}"))
         else:
             return Util.bot_invalid_input_response()
