@@ -40,9 +40,9 @@ class Voice:
             ret += f"语音id：{vid}\n" \
                    f"标签：{tag}\n" \
                    f"提供者：{nickname}\n" \
-                   f"保存时间：{create_time}\n"
-            ret += "-" * 20
-        return ret[:-20]
+                   f"保存时间：{create_time}\n" \
+                   f"{'-' * 20}\n"
+        return ret[:-21]
 
     # RETURN KOI'S VOICE RANDOMLY
     def koi_voice(self):

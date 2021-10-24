@@ -513,7 +513,8 @@ class MessageHandler(Thread):
 
         # VOICE LIST
         if command == "语音列表":
-            CQHTTP.send_private_message(Voice().voice_list(), self.sender_uin)
+            voice_info = Voice().voice_list()
+            CQHTTP.send_private_message(voice_info, self.sender_uin)
 
     # OVERRIDE
     def run(self):
