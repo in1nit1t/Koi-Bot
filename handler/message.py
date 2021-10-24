@@ -500,7 +500,7 @@ class MessageHandler(Thread):
 
         # RETAIL
         if Util.has_high_privilege(self.sender_uin):
-            if command in ["转述"]:
+            if command == "转述":
                 CQHTTP.send_group_message(self.raw_message[3:])
 
             # RETAIL BILIBILI SHARE
@@ -510,6 +510,10 @@ class MessageHandler(Thread):
         # UPDATE COSPLAY PICTURE
         elif command in ["cos更新", "更新cos"] and self.is_bot_admin():
             Cosplay.update_pic()
+
+        # VOICE LIST
+        if command == "语音列表":
+            CQHTTP.send_private_message(Voice().voice_list(), self.sender_uin)
 
     # OVERRIDE
     def run(self):

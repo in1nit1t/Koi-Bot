@@ -69,10 +69,16 @@ class Database:
         sql = "select `points` from user where `id`=%s"
         self.cursor.execute(sql, uid)
 
+    # SELECT USER BY UID
+    @Decorator.db_select_one
+    def select_user_by_uid(self, uid):
+        sql = "select * from `user` where `id`=%s"
+        self.cursor.execute(sql, uid)
+
     # SELECT USER BY UIN
     @Decorator.db_select_one
     def select_user_by_uin(self, uin):
-        sql = "select * from user where `uin`=%s"
+        sql = "select * from user` where `uin`=%s"
         self.cursor.execute(sql, uin)
 
     # GET UID BY UIN

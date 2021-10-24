@@ -39,6 +39,12 @@ class VoiceDAO(Database):
         sql = "update voice set `tag`=%s where `message_id`=%s"
         self.cursor.execute(sql, (tag, message_id))
 
+    # RETURN ALL VOICE
+    @Decorator.db_select_all
+    def select_all(self):
+        sql = "select * from voice"
+        self.cursor.execute(sql)
+
     # RETURN ONE VOICE BY ID
     @Decorator.db_select_one
     def select_voice_by_id(self, vid):

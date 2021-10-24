@@ -10,7 +10,7 @@ class Voice:
     koi_qq = setting["account"]["qq"]["koi"]
 
     # INIT SETTINGS
-    def __init__(self, to):
+    def __init__(self, to=None):
         self.to = to
         self.voice_dao = VoiceDAO()
 
@@ -20,6 +20,29 @@ class Voice:
         if data:
             second_message = Util.at_pack(f"收好了捏，本条语音id：{vid}", self.to)
             CQHTTP.send_group_message(second_message)
+
+    # LIST VOICE
+    def voice_list(self):
+        voices = self.voice_dao.select_all()
+        if not voices:
+            return "还没有语音哦，快去保存几条吧~"
+
+        ret = ''
+        for voice in voices:
+            vid, _, uid, _, _, tag, create_time = voice
+            user = self.voice_dao.select_user_by_uid(uid)
+            nickname = "暂无数据"
+            if user:
+                member_info = CQHTTP.group_member_info(user[1])
+                if member_info:
+                    nickname = member_info["nickname"]
+
+            ret += f"语音id：{vid}\n" \
+                   f"标签：{tag}\n" \
+                   f"提供者：{nickname}\n" \
+                   f"保存时间：{create_time}\n"
+            ret += "-" * 20
+        return ret[:-20]
 
     # RETURN KOI'S VOICE RANDOMLY
     def koi_voice(self):
