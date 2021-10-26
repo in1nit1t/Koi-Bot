@@ -1,5 +1,6 @@
 import re
 import math
+import time
 import random
 import threading
 from threading import Thread
@@ -517,6 +518,7 @@ class MessageHandler(Thread):
             voice_info = Voice().voice_list()
             for i in range(math.ceil(len(voice_info) / 1000)):
                 CQHTTP.send_private_message(voice_info[i*1000:(i+1)*1000], self.sender_uin)
+                time.sleep(1.5)
 
     # OVERRIDE
     def run(self):
