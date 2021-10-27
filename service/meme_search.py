@@ -41,14 +41,14 @@ class MemeSearch:
 
     # GET DEFINITION ID
     def get_did(self, seq):
-        # SELECT LABEL <h1> THAT CONTAINS TITLE
+        # SELECT LABEL <div> THAT CONTAINS TITLE
         tree = etree.HTML(self.search_html)
-        result_h1 = tree.xpath("//h1[@class='title pre']")
+        result_div = tree.xpath("//div[@class='title pre']")
 
         # GET DID THROUGH SEQUENCE
         seq -= 1
-        if 0 <= seq < len(result_h1):
-            return result_h1[seq].getparent().getparent().getparent().getparent().get("data-id")
+        if 0 <= seq < len(result_div):
+            return result_div[seq].getparent().getparent().getparent().getparent().get("data-id")
         return False
 
     # GET REFERENCES THAT DEFINITION USED
@@ -67,14 +67,14 @@ class MemeSearch:
 
     # PARSE SEARCH & RETURN ENTRIES
     def parse_search(self):
-        # SELECT LABEL <h1> THAT CONTAINS TITLE
+        # SELECT LABEL <div> THAT CONTAINS TITLE
         tree = etree.HTML(self.search_html)
-        result_h1 = tree.xpath("//h1[@class='title pre']")
+        result_div = tree.xpath("//div[@class='title pre']")
 
         # ENTRIES SPLICING
         ret = ''
-        for idx, h1 in enumerate(result_h1):
-            title = h1.xpath("./strong")[0].text
+        for idx, div in enumerate(result_div):
+            title = div.xpath("./strong")[0].text
             ret += f"{idx+1}. {title}\n"
         return ret
 
@@ -82,23 +82,11 @@ class MemeSearch:
     def parse_definition(self, seq):
         # SELECT LABEL <span> THAT CONTAINS DEFINITION PIECE
         tree = etree.HTML(self.definition_html)
-        result_span = tree.xpath("//div[@class='content']/div/span")
+        texts = tree.xpath("//div[@class='content']/div/span/span/text()")
 
         # DEFINITION SPLICING
         ret = f"以下是关于 [{self.keyword}] 的第 {seq} 条定义：\n{'-' * 20}\n"
-        for span in result_span:
-            # GET CHILD LABEL
-            children = span.getchildren()[0]
-
-            # ADD LINEFEED IF CHILD LABEL IS <br>
-            if children.tag == "br":
-                ret += '\n'
-                continue
-
-            # SPLICING IF NOT NONE
-            piece = children.text
-            if piece:
-                ret += piece
+        ret += ''.join(map(lambda x: re.sub(u"[\u200c\u200b]", '', x), texts))
 
         # ADD PICTURE IF EXIST
         content_div = tree.xpath("//div[@class='content']")[0]
