@@ -21,8 +21,9 @@ class Music:
             "offset": 0,
             "limit": 15
         }
+        cookies = {"NMTID": "00O_5_Le2xbLxhU4EDeochB0aEYV08AAAF11I98Nw"}
         try:
-            result = requests.post(Music.api_url, data=data).json()
+            result = requests.post(Music.api_url, data=data, cookies=cookies).json()
             return result["result"]["songs"] if result["code"] == 200 else []
         except:
             logger.error(f"<网易云音乐> 搜索 /{self.song_name}/ 时 API 调用失败", traceback.format_exc())
