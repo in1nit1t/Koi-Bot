@@ -136,8 +136,9 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 <details>
 <summary>私聊主动技能</summary>
 
-1. 更新cos（仅 admin）
-2. 转述（仅群管理/群主）
+1. 语音列表
+2. 更新cos（仅 admin）
+3. 转述（仅群管理/群主）
 </details>
 
 <br>
@@ -169,12 +170,12 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
 
 - account -> uin：改为 bot 的 qq 号（找一个不用的 qq 号作为 bot）
 - account -> password：改为 qq 号对应的密码
-- servers -> http -> post：增加 url 子项，值为 `127.0.0.1:5701`（注意在 url 前面添加短横）
+- servers -> http -> post：增加 url 子项，值为 `http://127.0.0.1:5701`（注意在 url 前面添加短横）
 
 <p align="center">
 <img src="https://i.loli.net/2021/09/21/U9gNRehDoLarp6S.png">
 
-<img src="https://i.loli.net/2021/09/21/7ZhYAOQzJ6B1TGq.png">
+<img src="https://s2.loli.net/2021/12/08/m8sCotOuVKF3I1x.png">
 </p>
 
 <br>
