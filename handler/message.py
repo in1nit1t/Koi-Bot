@@ -134,7 +134,7 @@ class MessageHandler(Thread):
             # CHECK IF IS VOICE MESSAGE
             prev_voice_msg = None
             for i in range(len(g_voice_msg_queue)):
-                if g_voice_msg_queue[i][0] == message_id:
+                if g_voice_msg_queue[i][0] == int(message_id):
                     prev_voice_msg = g_voice_msg_queue[i]
 
             # CASE VOICE
