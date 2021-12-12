@@ -157,8 +157,8 @@ class MessageHandler(Thread):
                     if vid:
                         return f"语音保存成功，id为{vid}"
                 return Util.bot_error_response()
-        else:
-            return Util.bot_error_response()
+            return "没能找到那条消息，摆了QAQ"
+        return Util.bot_error_response()
 
     # DELETE SAVED MESSAGE
     def delete_previous_message(self, message_id):
