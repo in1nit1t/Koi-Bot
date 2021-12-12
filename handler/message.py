@@ -42,6 +42,10 @@ g_bai_lan_flag = False
 g_bai_lan_clock = None
 g_bai_lan_lock = threading.Lock()
 
+# VOICE MESSAGE QUEUE
+g_voice_msg_queue = collections.deque(maxlen=100)
+g_voice_msg_queue_lock = threading.Lock()
+
 
 class MessageHandler(Thread):
 
@@ -57,7 +61,6 @@ class MessageHandler(Thread):
     def __init__(self, content):
         super().__init__()
         self.setDaemon(True)
-        self.voice_msg_queue = collections.deque(maxlen=100)
 
         # RESTORE PROPERTY
         self.message = content["message"]
@@ -130,9 +133,9 @@ class MessageHandler(Thread):
         if previous_message:
             # CHECK IF IS VOICE MESSAGE
             prev_voice_msg = None
-            for i in range(len(self.voice_msg_queue)):
-                if self.voice_msg_queue[i][0] == message_id:
-                    prev_voice_msg = self.voice_msg_queue[i]
+            for i in range(len(g_voice_msg_queue)):
+                if g_voice_msg_queue[i][0] == message_id:
+                    prev_voice_msg = g_voice_msg_queue[i]
 
             # CASE VOICE
             if prev_voice_msg:
@@ -546,7 +549,9 @@ class MessageHandler(Thread):
             if Util.is_voice_message(self.raw_message):
                 voice_params = Util.voice_message_extract(self.message)
                 to_save = (self.message_id, self.sender_uin, voice_params)
-                self.voice_msg_queue.append(to_save)
+                g_voice_msg_queue_lock.acquire()
+                g_voice_msg_queue.append(to_save)
+                g_voice_msg_queue_lock.release()
 
             # AUTO SAVE CHECK IF ENABLED
             if g_auto_save_config["enable"]:
