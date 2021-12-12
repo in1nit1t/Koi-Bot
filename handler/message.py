@@ -3,6 +3,7 @@ import math
 import time
 import random
 import threading
+import collections
 from threading import Thread
 
 from core.setting import setting
@@ -56,6 +57,7 @@ class MessageHandler(Thread):
     def __init__(self, content):
         super().__init__()
         self.setDaemon(True)
+        self.voice_msg_queue = collections.deque(maxlen=100)
 
         # RESTORE PROPERTY
         self.message = content["message"]
@@ -126,11 +128,14 @@ class MessageHandler(Thread):
     def save_previous_message(self, message_id, arg):
         previous_message = CQHTTP.get_message(message_id)
         if previous_message:
-            raw_message = previous_message["raw_message"]
-            sender_uin = previous_message["sender"]["user_id"]
+            # CHECK IF IS VOICE MESSAGE
+            prev_voice_msg = None
+            for i in range(len(self.voice_msg_queue)):
+                if self.voice_msg_queue[i][0] == message_id:
+                    prev_voice_msg = self.voice_msg_queue[i]
 
             # CASE VOICE
-            if Util.is_voice_message(raw_message):
+            if prev_voice_msg:
                 voice_dao = VoiceDAO()
 
                 # ALREADY SAVED
@@ -143,7 +148,7 @@ class MessageHandler(Thread):
                         return "这条语音已经被保存过啦~"
 
                 # DO SAVE
-                voice_params = Util.voice_message_extract(raw_message)
+                sender_uin, voice_params = prev_voice_msg[1], prev_voice_msg[2]
                 if voice_params:
                     vid = voice_dao.record_voice(message_id, sender_uin, voice_params, arg)
                     if vid:
@@ -536,6 +541,12 @@ class MessageHandler(Thread):
             speak_ranking.record(self.sender_uin)
             if not self.raw_message:
                 return
+
+            # SAVE AT MOST 100 VOICE MESSAGES
+            if Util.is_voice_message(self.raw_message):
+                voice_params = Util.voice_message_extract(self.message)
+                to_save = (self.message_id, self.sender_uin, voice_params)
+                self.voice_msg_queue.append(to_save)
 
             # AUTO SAVE CHECK IF ENABLED
             if g_auto_save_config["enable"]:
