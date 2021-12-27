@@ -31,6 +31,13 @@
           "minute": 0
         }
       },
+      "contribution": {
+        "enable": true,
+        "push_time": {
+          "hour": 20,
+          "minute": 0
+        }
+      },
       "jichou": {
         "enable": true,
         "version": "old"

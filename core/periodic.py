@@ -8,6 +8,7 @@ from core.util import Util, CQHTTP
 from service.alapi import AlApi
 from service.sign_in import SignIn
 from service.bilibili import Bilibili
+from service.contribute import Contribution
 from service.speak_ranking import speak_ranking
 
 
@@ -18,6 +19,7 @@ class Periodic:
         self.sign_in_flag = True
         self.morning_push_flag = True
         self.speak_ranking_flag = True
+        self.contribution_push_flag = True
 
         # BILIBILI LISTEN USERS
         self.bilibili_listen = []
@@ -29,6 +31,12 @@ class Periodic:
         sign_in_config = setting["service"]["group"]["sign_in"]
         self.sign_in_refresh_hour = int(sign_in_config["refresh_time"]["hour"])
         self.sign_in_refresh_minute = int(sign_in_config["refresh_time"]["minute"])
+
+        # CONTRIBUTION
+        contrib_config = setting["service"]["group"]["contribution"]
+        self.contrib_enable = contrib_config["enable"]
+        self.contrib_push_hour = int(contrib_config["push_time"]["hour"])
+        self.contrib_push_minute = int(contrib_config["push_time"]["minute"])
 
     # MORNING PUSH
     def morning_push(self):
@@ -66,6 +74,11 @@ class Periodic:
         SignIn().refresh()
         self.sign_in_flag = False
 
+    # LIST CONTRIBUTION
+    def list_contribution(self):
+        Contribution().do_contribution_list()
+        self.contribution_push_flag = False
+
     # BILIBILI STATUS CHECK
     def bilibili_status_check(self):
         for listener in self.bilibili_listen:
@@ -86,11 +99,16 @@ class Periodic:
                 < "%02d:%02d:30" % (self.sign_in_refresh_hour, self.sign_in_refresh_minute) \
                 and self.sign_in_flag:
             self.refresh_sign_in()
+        if self.contrib_enable and datetime.now().weekday() == 7 and self.contribution_push_flag and \
+                "%02d:%02d:00" % (self.contrib_push_hour, self.contrib_push_minute) <= now \
+                < "%02d:%02d:30" % (self.contrib_push_hour, self.contrib_push_minute):
+            self.list_contribution()
 
         # RECOVERY FLAGS
         if "03:00:00" <= now < "03:00:30":
             self.sign_in_flag = True
             self.morning_push_flag = True
             self.speak_ranking_flag = True
+            self.contribution_push_flag = True
 
         self.bilibili_status_check()

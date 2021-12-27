@@ -21,6 +21,7 @@ from service.sign_in import SignIn
 from service.cosplay import Cosplay
 from service.epidemic import Epidemic
 from service.meme_search import MemeSearch
+from service.contribute import Contribution
 from service.generator.jichou import JiChou
 from service.generator.juejuezi import JueJueZi
 from service.translate import BaiduTranslate
@@ -315,6 +316,11 @@ class MessageHandler(Thread):
         # MUSIC MODULE
         elif command == "点歌":
             msg = self.music(raw_message)
+
+        # CONTRIBUTION MODULE
+        elif command == "投稿":
+            contrib = Contribution(self.sender_uin)
+            msg = contrib.add_contrib(raw_message)
 
         # TRANSLATE MODULE
         elif command[:2] == "翻译":

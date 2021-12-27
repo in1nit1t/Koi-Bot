@@ -105,6 +105,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
     - 生成绝绝子
     - 生成记仇表情包
 15. cosplay图片
+16. 投稿
 </details>
 
 <details>
@@ -131,6 +132,7 @@ PS. 没有使用 nonebot + 协程，就是想看看轮子是怎么造的（
     - 新动态（携带动态截图）
     - 新作品（携带作品截图）
     - 新粉丝（携带新粉丝头像及id）
+11. 每周投稿推送
 </details>
 
 <details>
@@ -308,6 +310,13 @@ cd go_cqhttp
         "base_points": 3,   // 每次签到获得的基础分
         "refresh_time": {   // 每日签到的刷新时间（24小时制）
           "hour": 5,        // 默认为凌晨5点
+          "minute": 0
+        }
+      },
+      "contribution": {  // 投稿
+        "enable": true,    // 是否启用
+        "push_time": {     // 推送时间（24小时制）
+          "hour": 20,      // 默认为周末晚上8点
           "minute": 0
         }
       },
