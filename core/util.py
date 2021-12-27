@@ -237,6 +237,12 @@ class Util:
             return user_info["role"] in ["admin", "owner"]
         return False
 
+    # CHECK IF USER IS IN THE GROUP
+    @staticmethod
+    def is_in_group(uin: str) -> bool:
+        user_info = CQHTTP.group_member_info(uin)
+        return user_info is not None
+
     # NOTICE ADMIN
     @staticmethod
     def notice_admin(msg: str) -> None:

@@ -549,7 +549,7 @@ class MessageHandler(Thread):
     # OVERRIDE
     def run(self):
         # PRIVATE MESSAGE
-        if self.message_type == "private":
+        if self.message_type == "private" and Util.is_in_group(self.sender_uin):
             return self.private_service_dispatch()
 
         # GROUP MESSAGE
