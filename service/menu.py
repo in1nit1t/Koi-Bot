@@ -23,6 +23,7 @@ class Menu:
     14. 生成记仇表情包
     15. cosplay图片
     16. 疫情数据查询
+    17. 投稿
 
     PS. [菜单 序号] 可以展示对应功能的详细说明，示例：菜单 2
     """
@@ -171,6 +172,14 @@ class Menu:
     3. 温州疫情
     """
 
+    function17 = """
+    投稿指令格式：
+
+    [投稿 xxx]：将投稿内容xxx保存，将在周末展示投稿箱中的所有稿件
+    
+    tip: 该指令可在与bot的私聊中使用
+    """
+
     # FORMAT THE OUTPUT
     @staticmethod
     def format(raw):
@@ -186,7 +195,7 @@ class Menu:
     def detail(seq):
         if not seq.isdigit():
             return Util.bot_invalid_input_response()
-        if 1 <= int(seq) <= 16:
+        if 1 <= int(seq) <= 17:
             return Menu.format(eval(f"Menu.function{seq}"))
         else:
             return Util.bot_invalid_input_response()

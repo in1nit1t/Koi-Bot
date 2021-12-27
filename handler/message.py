@@ -274,6 +274,11 @@ class MessageHandler(Thread):
             else:
                 return Util.bot_invalid_input_response()
 
+    # DO CONTRIBUTE SERVICE
+    def contribute(self, raw_message):
+        contrib = Contribution(self.sender_uin)
+        return contrib.add_contrib(raw_message)
+
     # DISPATCH THE MESSAGE TO DIFFERENT GROUP SERVICE
     def group_service_dispatch(self):
         msg = None
@@ -319,8 +324,7 @@ class MessageHandler(Thread):
 
         # CONTRIBUTION MODULE
         elif command == "投稿":
-            contrib = Contribution(self.sender_uin)
-            msg = contrib.add_contrib(raw_message)
+            msg = self.contribute(raw_message)
 
         # TRANSLATE MODULE
         elif command[:2] == "翻译":
@@ -526,6 +530,11 @@ class MessageHandler(Thread):
         # UPDATE COSPLAY PICTURE
         elif command in ["cos更新", "更新cos"] and self.is_bot_admin():
             Cosplay.update_pic()
+
+        # CONTRIBUTION
+        elif command == "投稿":
+            msg = self.contribute(raw_message)
+            CQHTTP.send_private_message(msg, self.sender_uin)
 
         # VOICE LIST
         if command == "语音列表":

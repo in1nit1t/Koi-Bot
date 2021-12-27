@@ -24,12 +24,12 @@ DROP TABLE IF EXISTS `contribution`;
 CREATE TABLE `contribution`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `uid` int NOT NULL,
-  `content` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `content` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_uid_contrib`(`uid`) USING BTREE,
   CONSTRAINT `fk_uid_contrib` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for goods
