@@ -528,16 +528,16 @@ class MessageHandler(Thread):
                 CQHTTP.send_group_message(self.raw_message)
 
         # UPDATE COSPLAY PICTURE
-        elif command in ["cos更新", "更新cos"] and self.is_bot_admin():
+        if command in ["cos更新", "更新cos"] and self.is_bot_admin():
             Cosplay.update_pic()
 
         # CONTRIBUTION
-        elif command == "投稿":
+        if command == "投稿":
             msg = self.contribute(raw_message)
             CQHTTP.send_private_message(msg, self.sender_uin)
 
         # VOICE LIST
-        if command == "语音列表":
+        elif command == "语音列表":
             voice_info = Voice().voice_list()
             for i in range(math.ceil(len(voice_info) / 1000)):
                 CQHTTP.send_private_message(voice_info[i*1000:(i+1)*1000], self.sender_uin)
