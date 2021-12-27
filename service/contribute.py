@@ -16,7 +16,8 @@ class Contribution:
         if len(raw_message) < 2:
             return Util.bot_invalid_input_response()
 
-        ret = self.contrib_dao.insert_contrib(self.uin, raw_message[1])
+        uid = self.contrib_dao.get_uid_by_uin(self.uin)
+        ret = self.contrib_dao.insert_contrib(uid, raw_message[1])
         return "投稿成功☆" if ret else Util.bot_error_response()
 
     # LIST CONTRIBUTION
