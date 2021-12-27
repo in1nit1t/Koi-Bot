@@ -24,7 +24,11 @@ class Contribution:
     def do_contribution_list(self, to_group=True):
         contributions = self.contrib_dao.select_week_contrib()
         if not contributions:
-            return "本周没有投稿，你们怎么回事？"
+            msg = "还没有投稿哟"
+            if to_group:
+                CQHTTP.send_group_message(msg)
+            else:
+                CQHTTP.send_private_message(msg, self.uin)
 
         if to_group:
             CQHTTP.send_group_message("接下来将推送本周的投稿")
