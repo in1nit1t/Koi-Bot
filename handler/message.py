@@ -536,6 +536,9 @@ class MessageHandler(Thread):
             msg = self.contribute(raw_message)
             CQHTTP.send_private_message(msg, self.sender_uin)
 
+        elif command == "查看投稿":
+            Contribution(self.sender_uin).do_contribution_list(False)
+
         # VOICE LIST
         elif command == "语音列表":
             voice_info = Voice().voice_list()

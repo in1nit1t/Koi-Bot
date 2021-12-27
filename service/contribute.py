@@ -21,12 +21,13 @@ class Contribution:
         return "投稿成功☆" if ret else Util.bot_error_response()
 
     # LIST CONTRIBUTION
-    def do_contribution_list(self):
+    def do_contribution_list(self, to_group=True):
         contributions = self.contrib_dao.select_week_contrib()
         if not contributions:
             return "本周没有投稿，你们怎么回事？"
 
-        CQHTTP.send_group_message("接下来将推送本周的投稿")
+        if to_group:
+            CQHTTP.send_group_message("接下来将推送本周的投稿")
         for contrib in contributions:
             _, uid, content, create_time = contrib
             user = self.contrib_dao.select_user_by_uid(uid)
@@ -37,4 +38,11 @@ class Contribution:
                   f"投稿时间：{create_time}\n\n" \
                   f"{content}"
             time.sleep(0.5)
-            CQHTTP.send_group_message(msg)
+            if to_group:
+                CQHTTP.send_group_message(msg)
+            else:
+                CQHTTP.send_private_message(msg, self.uin)
+
+    # DELETE CONTRIBUTIONS
+    def delete_contrib(self):
+        self.contrib_dao.delete_contrib()

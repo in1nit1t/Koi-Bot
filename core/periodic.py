@@ -76,7 +76,9 @@ class Periodic:
 
     # LIST CONTRIBUTION
     def list_contribution(self):
-        Contribution().do_contribution_list()
+        contrib = Contribution()
+        contrib.do_contribution_list()
+        contrib.delete_contrib()
         self.contribution_push_flag = False
 
     # BILIBILI STATUS CHECK
@@ -99,7 +101,7 @@ class Periodic:
                 < "%02d:%02d:30" % (self.sign_in_refresh_hour, self.sign_in_refresh_minute) \
                 and self.sign_in_flag:
             self.refresh_sign_in()
-        if self.contrib_enable and datetime.now().weekday() == 7 and self.contribution_push_flag and \
+        if self.contrib_enable and datetime.now().weekday() == 6 and self.contribution_push_flag and \
                 "%02d:%02d:00" % (self.contrib_push_hour, self.contrib_push_minute) <= now \
                 < "%02d:%02d:30" % (self.contrib_push_hour, self.contrib_push_minute):
             self.list_contribution()

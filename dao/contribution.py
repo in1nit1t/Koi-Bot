@@ -17,6 +17,11 @@ class ContributionDAO(Database):
     # SELECT THIS WEEK'S CONTRIBUTION
     @Decorator.db_select_all
     def select_week_contrib(self):
-        sql = "SELECT * FROM `contribution` WHERE TIMESTAMPDIFF(DAY, DATE_FORMAT(`create_time`, '%Y-%m-%d'), " \
-              "DATE_FORMAT(NOW(),'%Y-%m-%d')) BETWEEN 0 AND 7 "
+        sql = "SELECT * FROM `contribution`"
+        self.cursor.execute(sql)
+
+    # DELETE ALL CONTRIBUTION
+    @Decorator.db_modify
+    def delete_contrib(self):
+        sql = "DELETE FROM `contribution`"
         self.cursor.execute(sql)
