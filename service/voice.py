@@ -31,11 +31,7 @@ class Voice:
         for voice in voices:
             vid, _, uid, _, _, tag, create_time = voice
             user = self.voice_dao.select_user_by_uid(uid)
-            nickname = "暂无数据"
-            if user:
-                member_info = CQHTTP.group_member_info(user[1])
-                if member_info:
-                    nickname = member_info["nickname"]
+            nickname = Util.get_member_nickname(user[1]) if user else "暂无数据"
 
             ret += f"语音id：{vid}\n" \
                    f"标签：{tag}\n" \

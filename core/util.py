@@ -78,9 +78,15 @@ class Util:
             return True, func(*args)
         return False, None
 
+    # GET GROUP MEMBER'S NICKNAME
+    @staticmethod
+    def get_member_nickname(uin: str) -> str:
+        member_info = CQHTTP.group_member_info(uin)
+        return member_info["nickname"] if member_info else "暂无数据"
+
     # GET VOICE RESOURCE PATH
     @staticmethod
-    def get_voice_resource(whom):
+    def get_voice_resource(whom: str) -> str:
         voice_directory = f"./resource/voice/{whom}/"
         voice = random.choice(os.listdir(voice_directory))
         return os.path.abspath(os.path.join(voice_directory, voice))
