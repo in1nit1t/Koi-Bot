@@ -17,7 +17,8 @@ class Contribution:
             return Util.bot_invalid_input_response()
 
         uid = self.contrib_dao.get_uid_by_uin(self.uin)
-        ret = self.contrib_dao.insert_contrib(uid, raw_message[1])
+        content = ' '.join(raw_message[1:])
+        ret = self.contrib_dao.insert_contrib(uid, content)
         return "投稿成功☆" if ret else Util.bot_error_response()
 
     # LIST CONTRIBUTION
