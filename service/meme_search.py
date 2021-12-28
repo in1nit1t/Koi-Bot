@@ -43,7 +43,7 @@ class MemeSearch:
     def get_did(self, seq):
         # SELECT LABEL <div> THAT CONTAINS TITLE
         tree = etree.HTML(self.search_html)
-        result_div = tree.xpath("//div[@class='title pre']")
+        result_div = tree.xpath("//strong[@class='title pre']")
 
         # GET DID THROUGH SEQUENCE
         seq -= 1
@@ -69,20 +69,19 @@ class MemeSearch:
     def parse_search(self):
         # SELECT LABEL <div> THAT CONTAINS TITLE
         tree = etree.HTML(self.search_html)
-        result_div = tree.xpath("//div[@class='title pre']")
+        result_div = tree.xpath("//strong[@class='title pre']")
 
         # ENTRIES SPLICING
         ret = ''
         for idx, div in enumerate(result_div):
-            title = div.xpath("./strong")[0].text
-            ret += f"{idx+1}. {title}\n"
+            ret += f"{idx+1}. {div.text}\n"
         return ret
 
     # PARSE DEFINITION PAGE
     def parse_definition(self, seq):
         # SELECT LABEL <span> THAT CONTAINS DEFINITION PIECE
         tree = etree.HTML(self.definition_html)
-        texts = tree.xpath("//div[@class='content']/div/span/span/text()")
+        texts = tree.xpath("//div[@class='content']/div/span/text()")
 
         # DEFINITION SPLICING
         ret = f"以下是关于 [{self.keyword}] 的第 {seq} 条定义：\n{'-' * 20}\n"
