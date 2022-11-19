@@ -1,4 +1,4 @@
-Pillow~=7.0.0
+Pillow~=9.2.0
 PyMySQL~=1.0.2
 requests~=2.22.0
 jieba~=0.42.1
